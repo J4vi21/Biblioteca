@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_erros', 1);
+error_reporting(E_ALL);
+
 session_start();
 if (!isset($_SESSION['usuario'])) {
    header('Location: login.php');
@@ -6,9 +10,6 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 ?>
-
-
-
 <?php
 require_once __DIR__ . '/../APP/Dao/DAO_prestamos.php';
 use App\Dao\DAO_prestamos;
@@ -23,13 +24,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 $dao = new DAO_prestamos();
 $prestamos =  $dao -> MostrarPrestamos($busqueda);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/style.css">
+    <script src="AJAX/prestamo.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
     <title>Buscar prestamo</title>
 </head>
@@ -94,13 +95,13 @@ $prestamos =  $dao -> MostrarPrestamos($busqueda);
                 📚 Resultados de la búsqueda 
             </div>
             <?php foreach ($prestamos as $prestamo): ?>
-             <div class="book-item">
+             <div id='fila_<?php echo $prestamo["id_prestamo"]; ?>' class="book-item">
                 <div class="prestamo-info"><strong>Fecha del pedido:</strong> <?php echo htmlspecialchars($prestamo['fecha_prestamo']);?></div>
                 <div class="prestamo-info"><strong>Fecha devuelto:</strong><?php echo htmlspecialchars($prestamo['fecha_devolucion']);?></div>
                 <div class="prestamo-info"><strong>Multa:</strong><?php echo htmlspecialchars($prestamo['multa']);?></div>
                 <div class="prestamo-info"><strong>Cantidad de libros:</strong><?php echo htmlspecialchars($prestamo['cantidad_libros']);?></div>
-                
-                   
+                     <?php  $id = $prestamo['id_prestamo']; // ver que hay ?>
+                   <button class="btnDevolver" data-id="<?php echo $id ?>">Devolver</button>
         </form>
 
             </div>

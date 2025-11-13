@@ -108,6 +108,8 @@ $libros =  $dao -> MostrarLibro($busqueda,$orden);
                 <div class="book-info"><strong>Año:</strong><?php echo htmlspecialchars($libro['anio_publicacion']);?></div>
                 <div class="book-info"><strong>stock:</strong><?php echo htmlspecialchars($libro['stock']);?></div>
                 
+                
+                
             </div>
              <?php endforeach; ?>
         </div>
